@@ -3,6 +3,7 @@ import cinemaxLogo from "../assets/cinemax-lg.png";
 
 import Search from "../components/Search";
 import Movies from "../components/Movies";
+import Nav from "../components/Nav";
 
 export default function Home() {
   const API = "https://www.omdbapi.com/?apikey=ffe9f21a";
@@ -22,18 +23,21 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="App">
-      <header>
-        <img src={cinemaxLogo} className="logo" alt="logo cinemax" />
-        <Search
-          search={search}
-          setSearch={setSearch}
-          searchMovies={searchMovies}
-        />
-      </header>
-      <main>
-        <Movies movies={movies} />
-      </main>
-    </div>
+    <>
+      <Nav />
+      <div className="App">
+        <header>
+          <img src={cinemaxLogo} className="logo" alt="logo cinemax" />
+          <Search
+            search={search}
+            setSearch={setSearch}
+            searchMovies={searchMovies}
+          />
+        </header>
+        <main>
+          <Movies movies={movies} />
+        </main>
+      </div>
+    </>
   );
 }

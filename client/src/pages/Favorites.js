@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Movies from '../components/Movies';
+import Nav from "../components/Nav";
 
 const Favorites = () => {
     // Ici c'est la liste des favoris
@@ -16,7 +17,7 @@ const Favorites = () => {
          */
     const fetchFavorites = async () => {
         try {
-            const response = await fetch('http://localhost:3002/api/favorites')
+            const response = await fetch('/api/favorites')
             const data = await response.json()
             if(data.favorites) {
                 setFavorites(data.favorites)
@@ -38,9 +39,9 @@ const Favorites = () => {
                 const response = await fetch(API + "&i=" + item.movie) // Cette fois on fetch OMDB
                 const data = await response.json()
                 moviesArray.push({ imdbID: data.imdbID, Title: data.Title, Poster: data.Poster })
-                if (moviesArray.length > 0) { // On vérifie que le tableau n'est pas vide
-                    setMovies(moviesArray) // On ajoute les données à la `const` movies
-                }
+            }
+            if (moviesArray.length > 0) { // On vérifie que le tableau n'est pas vide
+                setMovies(moviesArray) // On ajoute les données à la `const` movies
             }
         } catch (error) {
             console.log('Une erreur est survenue lors de la récupération des films :' + error)
@@ -60,9 +61,9 @@ const Favorites = () => {
         fetchMovies()
     }, [favorites])
 
-
     return (
         <>
+            <Nav />
             <h1>Favorites</h1>
             <div>
                 <Movies movies={movies} />

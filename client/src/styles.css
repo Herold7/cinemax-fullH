@@ -28,7 +28,6 @@ body {
 
 .App {
   padding: 5rem 0;
-  /* max-width: 1000px; */
 }
 
 /* Fonts */
@@ -215,4 +214,25 @@ input[type="text"]:focus {
   height: 50px;
   object-fit: none;
   padding-top: 0;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65em;
+  background: #333;
+  border-bottom: 1px solid rgba(250, 250, 250, 0.2)
+}
+
+.nav {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: #f9f9f9;
 }
