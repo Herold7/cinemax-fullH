@@ -11,9 +11,9 @@ const app = express(); // Création de l'application
 const cors = require("cors"); // Module pour gérer le CORS
 const PORT = 3002; // Définition du port d'écoute
 const Save = require("./functions/Save"); // Importation de la fonction Save
+const path = require("path"); // Module pour gérer les chemins de fichiers
 // const Delete = require("./functions/Delete"); // Importation de la fonction Delete
 
-// ------------------------- ROUTES ------------------------- //
 
 /**
  * Middleware
@@ -34,9 +34,13 @@ const Save = require("./functions/Save"); // Importation de la fonction Save
  */
 app.use(express.urlencoded({ extended: true }),cors());
 
-app.get("/", (req, res) => {
-  res.redirect("/");
-})
+// Extension permettant au serveur de lire et renvoyer du JSON
+app.use(express.json()); 
+
+// Définition du dossier build ou dist pour les fichiers statiques
+app.use(express.static("./client/build")); 
+
+// ------------------------- ROUTES API ------------------------- //
 
 // Route permettant de traiter l'enregistrement d'un film dans la liste des favoris
 app.post("/api/save", (req, res) => {
@@ -44,7 +48,7 @@ app.post("/api/save", (req, res) => {
   const saveStatus = Save(imdbID); // On appelle la fonction Save en lui envoyant les données
   // Vérification du statut de la fonction Save
   if (saveStatus) {
-    res.redirect("/favorites");
+    res.redirect("/favorites")
   }
 });
 
@@ -59,6 +63,12 @@ app.post("/api/delete/", (req, res) => {
   Delete(imdbID); // On appelle la fonction Delete en lui envoyant les données
 });
 
+// ------------------------- ROUTES CLIENT ------------------------- //
+
+// Route principale qui redirige vers l'app React
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+})
 
 /** Lancement du serveur
 * La méthode listen permet de lancer le serveur sur
